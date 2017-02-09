@@ -135,4 +135,25 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
         $actual = $evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test');
         $this->assertTrue($actual);
     }
+
+    public function testCanExecuteOnResourceWithExplicitDeny()
+    {
+        $evaluator = new Evaluator([
+            'Statement' => [
+                [
+                    'Action' => 'service:test',
+                    'Resource' => 'arn:aws:test',
+                    'Effect' => 'Deny',
+                ],
+                [
+                    'Action' => 'service:test',
+                    'Resource' => 'arn:aws:test',
+                    'Effect' => 'Allow',
+                ],
+            ],
+        ]);
+
+        $actual = $evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test');
+        $this->assertFalse($actual);
+    }
 }

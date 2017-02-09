@@ -45,6 +45,14 @@ class Evaluator
     {
         // TODO(tom@tomrochette.com): Validate action and resource are in valid format
         $statements = $this->matchStatement($action, $resource);
+
+        foreach ($statements as $statement) {
+            // If we found a matching statement with an explicit deny, deny right away
+            if ($statement->getEffect()->isDeny()) {
+                return false;
+            }
+        }
+
         return ! empty($statements);
     }
 
@@ -86,10 +94,6 @@ class Evaluator
             }
 
             if ( ! $statement->matchesResource($resource)) {
-                continue;
-            }
-
-            if ( ! $statement->getEffect()->isAllow()) {
                 continue;
             }
 
