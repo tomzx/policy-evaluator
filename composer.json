@@ -1,0 +1,44 @@
+{
+	"name": "tomzx/policy-evaluator",
+	"description": "Policy evaluator based on AWS AMI Policies.",
+	"type": "library",
+	"keywords": [
+		"policy",
+		"policies",
+		"policy evaluator",
+		"aws"
+	],
+	"homepage": "https://github.com/tomzx/policy-evaluator",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Tom Rochette",
+			"email": "tom@tomrochette.com",
+			"homepage": "http://www.tomrochette.com"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/tomzx/policy-evaluator/issues"
+	},
+	"require": {
+		"php": ">=5.6.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^5"
+	},
+	"autoload": {
+		"psr-4": {
+			"tomzx\\PolicyEvaluator\\": "src/tomzx/PolicyEvaluator"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"tomzx\\PolicyEvaluator\\Test\\": "tests/tomzx/PolicyEvaluator"
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "0.1-dev"
+		}
+	}
+}
