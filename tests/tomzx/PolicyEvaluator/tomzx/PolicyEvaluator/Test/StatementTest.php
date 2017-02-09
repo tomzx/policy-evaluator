@@ -13,7 +13,6 @@ class StatementTest extends \PHPUnit_Framework_TestCase
             'Resource' => 'arn:aws:test',
             'Effect' => 'Allow',
         ]);
-
         $this->assertNotNull($statement);
     }
 
