@@ -36,33 +36,6 @@ class Evaluator
         return $this->statements;
     }
 
-    // /**
-    //  * @return array
-    //  */
-    // public function getActions()
-    // {
-    //     // TODO(tom@tomrochette.com): Get all actions -> statements
-    //     return [];
-    // }
-    //
-    // /**
-    //  * @return array
-    //  */
-    // public function getResources()
-    // {
-    //     // TODO(tom@tomrochette.com): Get all resources -> statements
-    //     return [];
-    // }
-
-    /**
-     * @param string $action
-     * @return bool
-     */
-    // public function canExecuteAction($action)
-    // {
-    //     return true;
-    // }
-
     /**
      * @param string $action
      * @param string $resource
@@ -96,11 +69,6 @@ class Evaluator
         foreach ($statements as $statement) {
             $statement = new Statement($statement);
             $this->statements[] = $statement;
-            // foreach ($statement->getResource() as $resource) {
-            // }
-            //
-            // foreach ($statement->getAction() as $action) {
-            // }
         }
     }
 

@@ -45,7 +45,6 @@ class Action
      */
     public function matches($requestedAction)
     {
-        // TODO(tom@tomrochette.com): Wildcard support
         foreach ($this->actions as $action) {
             $actionRegex = '/^'.str_replace('*', '.*', $action).'$/';
             if (preg_match($actionRegex, $requestedAction)) {

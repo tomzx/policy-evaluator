@@ -46,7 +46,6 @@ class Resource
      */
     public function matches($requestedResource)
     {
-        // TODO(tom@tomrochette.com): Wildcard support
         foreach ($this->resources as $resource) {
             $resourceRegex = '/^'.str_replace('*', '.*', $resource).'$/';
             if (preg_match($resourceRegex, $requestedResource)) {
