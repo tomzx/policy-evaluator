@@ -81,11 +81,11 @@ class Evaluator
     {
         $statements = [];
         foreach ($this->statements as $statement) {
-            if ( ! $statement->matchesResource($resource)) {
+            if ( ! $statement->matchesAction($action)) {
                 continue;
             }
 
-            if ( ! $statement->matchesAction($action)) {
+            if ( ! $statement->matchesResource($resource)) {
                 continue;
             }
 
