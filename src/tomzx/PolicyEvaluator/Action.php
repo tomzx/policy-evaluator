@@ -19,6 +19,10 @@ class Action
         }
 
         foreach ($actions as $action) {
+            if ($action === '*') {
+                continue;
+            }
+
             if (strpos($action, ':') === false) {
                 throw new \InvalidArgumentException('Invalid service prefix for action "' . $action . '".');
             }

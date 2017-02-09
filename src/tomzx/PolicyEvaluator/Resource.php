@@ -19,6 +19,10 @@ class Resource
         }
 
         foreach ($resources as $resource) {
+            if ($resource === '*') {
+                continue;
+            }
+
             // TODO(tom@tomrochette.com): Change resource prefix and partition
             if (strpos($resource, 'arn:aws') !== 0) {
                 throw new \InvalidArgumentException('Invalid resource "' . $resource . '".');

@@ -12,6 +12,12 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($action);
     }
 
+    public function testInitializeWithWildcard()
+    {
+        $action = new Action('*');
+        $this->assertNotNull($action);
+    }
+
     public function testInitializeWithArray()
     {
         $action = new Action(['service1:action1', 'service2:action2']);
@@ -46,6 +52,13 @@ class ActionTest extends \PHPUnit_Framework_TestCase
     public function testMatchWithWildcard()
     {
         $action = new Action('arn:aws:te*');
+        $actual = $action->matches('arn:aws:test');
+        $this->assertTrue($actual);
+    }
+
+    public function testMatchWithWildcardOnly()
+    {
+        $action = new Action('*');
         $actual = $action->matches('arn:aws:test');
         $this->assertTrue($actual);
     }

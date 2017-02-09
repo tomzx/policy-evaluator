@@ -12,6 +12,12 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($resource);
     }
 
+    public function testInitializeWithWildcard()
+    {
+        $resource = new Resource('*');
+        $this->assertNotNull($resource);
+    }
+
     public function testInitializeWithArray()
     {
         $resource = new Resource(['arn:aws:test', 'arn:aws:Test']);
@@ -37,6 +43,13 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     public function testMatchWithWildcard()
     {
         $resource = new Resource('arn:aws:te*');
+        $actual = $resource->matches('arn:aws:test');
+        $this->assertTrue($actual);
+    }
+
+    public function testMatchWithWildcardOnly()
+    {
+        $resource = new Resource('*');
         $actual = $resource->matches('arn:aws:test');
         $this->assertTrue($actual);
     }
