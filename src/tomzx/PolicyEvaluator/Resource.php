@@ -47,7 +47,7 @@ class Resource
     public function matches($requestedResource)
     {
         foreach ($this->resources as $resource) {
-            $resourceRegex = '/^'.str_replace('*', '.*', $resource).'$/';
+            $resourceRegex = '/^'.str_replace('\*', '.*', preg_quote($resource, '/')).'$/';
             if (preg_match($resourceRegex, $requestedResource)) {
                 return true;
             }

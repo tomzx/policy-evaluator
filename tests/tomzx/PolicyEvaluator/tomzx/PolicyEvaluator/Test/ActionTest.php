@@ -91,4 +91,11 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         $actual = $action->matches('arn:aws:tests');
         $this->assertFalse($actual);
     }
+
+    public function testMatchDoesNotMatchRegex()
+    {
+        $action = new Action('arn:aws:te[st]+');
+        $actual = $action->matches('arn:aws:test');
+        $this->assertFalse($actual);
+    }
 }

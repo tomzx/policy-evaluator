@@ -46,7 +46,7 @@ class Action
     public function matches($requestedAction)
     {
         foreach ($this->actions as $action) {
-            $actionRegex = '/^'.str_replace('*', '.*', $action).'$/';
+            $actionRegex = '/^'.str_replace('\*', '.*', preg_quote($action, '/')).'$/';
             if (preg_match($actionRegex, $requestedAction)) {
                 return true;
             }

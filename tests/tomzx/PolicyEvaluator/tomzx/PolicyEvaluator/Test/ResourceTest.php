@@ -82,4 +82,11 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $actual = $resource->matches('arn:aws:tests');
         $this->assertFalse($actual);
     }
+
+    public function testMatchDoesNotMatchRegex()
+    {
+        $resource = new Resource('arn:aws:te[st]+');
+        $actual = $resource->matches('arn:aws:test');
+        $this->assertFalse($actual);
+    }
 }
