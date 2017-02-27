@@ -44,58 +44,58 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
     public function testMatch()
     {
-        $action = new Action('arn:aws:test');
-        $actual = $action->matches('arn:aws:test');
+        $action = new Action('urn:test:test');
+        $actual = $action->matches('urn:test:test');
         $this->assertTrue($actual);
     }
 
     public function testMatchWithWildcard()
     {
-        $action = new Action('arn:aws:te*');
-        $actual = $action->matches('arn:aws:test');
+        $action = new Action('urn:test:te*');
+        $actual = $action->matches('urn:test:test');
         $this->assertTrue($actual);
     }
 
     public function testMatchWithWildcardOnly()
     {
         $action = new Action('*');
-        $actual = $action->matches('arn:aws:test');
+        $actual = $action->matches('urn:test:test');
         $this->assertTrue($actual);
     }
 
     public function testMatchWithWildcardAndNoMatch()
     {
-        $action = new Action('arn:aws:te*');
-        $actual = $action->matches('arn:aws:fail');
+        $action = new Action('urn:test:te*');
+        $actual = $action->matches('urn:test:fail');
         $this->assertFalse($actual);
     }
 
     // TODO(tom@tomrochette.com): Not sure how a wildcard query should work
     public function testMatchWithWildcardRequest()
     {
-        $action = new Action('arn:aws:test');
-        $actual = $action->matches('arn:aws:*');
+        $action = new Action('urn:test:test');
+        $actual = $action->matches('urn:test:*');
         $this->assertFalse($actual);
     }
 
     public function testMatchWithShorterRequestString()
     {
-        $action = new Action('arn:aws:test');
-        $actual = $action->matches('arn:aws:tes');
+        $action = new Action('urn:test:test');
+        $actual = $action->matches('urn:test:tes');
         $this->assertFalse($actual);
     }
 
     public function testMatchWithLongerRequestString()
     {
-        $action = new Action('arn:aws:test');
-        $actual = $action->matches('arn:aws:tests');
+        $action = new Action('urn:test:test');
+        $actual = $action->matches('urn:test:tests');
         $this->assertFalse($actual);
     }
 
     public function testMatchDoesNotMatchRegex()
     {
-        $action = new Action('arn:aws:te[st]+');
-        $actual = $action->matches('arn:aws:test');
+        $action = new Action('urn:test:te[st]+');
+        $actual = $action->matches('urn:test:test');
         $this->assertFalse($actual);
     }
 }

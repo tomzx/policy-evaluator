@@ -4,6 +4,8 @@ namespace tomzx\PolicyEvaluator;
 
 class Resource
 {
+    public static $prefix = 'urn';
+
     /**
      * @var array
      */
@@ -23,8 +25,7 @@ class Resource
                 continue;
             }
 
-            // TODO(tom@tomrochette.com): Change resource prefix and partition
-            if (strpos($resource, 'arn:aws') !== 0) {
+            if (strpos($resource, self::$prefix . ':') !== 0) {
                 throw new \InvalidArgumentException('Invalid resource "' . $resource . '".');
             }
         }

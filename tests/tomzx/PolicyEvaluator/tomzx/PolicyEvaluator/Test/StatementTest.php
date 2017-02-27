@@ -10,7 +10,7 @@ class StatementTest extends \PHPUnit_Framework_TestCase
     {
         $statement = new Statement([
             'Action' => 'service:test',
-            'Resource' => 'arn:aws:test',
+            'Resource' => 'urn:test:test',
             'Effect' => 'Allow',
         ]);
         $this->assertNotNull($statement);

@@ -12,7 +12,7 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
             'Statement' => [
                 [
                     'Action' => 'service:test',
-                    'Resource' => 'arn:aws:test',
+                    'Resource' => 'urn:test:test',
                     'Effect' => 'Allow',
                 ],
             ],
@@ -59,13 +59,13 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
             'Statement' => [
                 [
                     'Action' => 'service:test',
-                    'Resource' => 'arn:aws:test',
+                    'Resource' => 'urn:test:test',
                     'Effect' => 'Allow',
                 ],
             ],
         ]);
 
-        $actual = $evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test');
+        $actual = $evaluator->canExecuteActionOnResource('service:test', 'urn:test:test');
         $this->assertTrue($actual);
     }
 
@@ -76,13 +76,13 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
             'Statement' => [
                 [
                     'Action' => 'service:test',
-                    'Resource' => 'arn:aws:test',
+                    'Resource' => 'urn:test:test',
                     'Effect' => 'Allow',
                 ],
             ],
         ]);
 
-        $actual = $evaluator->canExecuteActionOnResource('service:test1', 'arn:aws:test');
+        $actual = $evaluator->canExecuteActionOnResource('service:test1', 'urn:test:test');
         $this->assertFalse($actual);
     }
 
@@ -93,13 +93,13 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
             'Statement' => [
                 [
                     'Action' => 'service:test',
-                    'Resource' => 'arn:aws:test',
+                    'Resource' => 'urn:test:test',
                     'Effect' => 'Allow',
                 ],
             ],
         ]);
 
-        $actual = $evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test1');
+        $actual = $evaluator->canExecuteActionOnResource('service:test', 'urn:test:test1');
         $this->assertFalse($actual);
     }
 
@@ -110,13 +110,13 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
             'Statement' => [
                 [
                     'Action' => 'service:test',
-                    'Resource' => 'arn:aws:test',
+                    'Resource' => 'urn:test:test',
                     'Effect' => 'Deny',
                 ],
             ],
         ]);
 
-        $actual = $evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test');
+        $actual = $evaluator->canExecuteActionOnResource('service:test', 'urn:test:test');
         $this->assertFalse($actual);
     }
 
@@ -126,13 +126,13 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
             'Statement' => [
                 [
                     'Action' => 'service:test',
-                    'Resource' => 'arn:aws:*',
+                    'Resource' => 'urn:test:*',
                     'Effect' => 'Allow',
                 ],
             ],
         ]);
 
-        $actual = $evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test');
+        $actual = $evaluator->canExecuteActionOnResource('service:test', 'urn:test:test');
         $this->assertTrue($actual);
     }
 
@@ -142,18 +142,18 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
             'Statement' => [
                 [
                     'Action' => 'service:test',
-                    'Resource' => 'arn:aws:test',
+                    'Resource' => 'urn:test:test',
                     'Effect' => 'Deny',
                 ],
                 [
                     'Action' => 'service:test',
-                    'Resource' => 'arn:aws:test',
+                    'Resource' => 'urn:test:test',
                     'Effect' => 'Allow',
                 ],
             ],
         ]);
 
-        $actual = $evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test');
+        $actual = $evaluator->canExecuteActionOnResource('service:test', 'urn:test:test');
         $this->assertFalse($actual);
     }
 }
