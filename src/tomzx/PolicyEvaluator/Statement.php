@@ -66,11 +66,12 @@ class Statement
 
     /**
      * @param string $resource
+     * @param array $variables
      * @return bool
      */
-    public function matchesResource($resource)
+    public function matchesResource($resource, array $variables = [])
     {
-        return $this->resource->matches($resource);
+        return $this->resource->matches($resource, $variables);
     }
 
     /**

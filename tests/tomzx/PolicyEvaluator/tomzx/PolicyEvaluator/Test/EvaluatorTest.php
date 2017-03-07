@@ -156,4 +156,42 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
         $actual = $evaluator->canExecuteActionOnResource('service:test', 'urn:test:test');
         $this->assertFalse($actual);
     }
+
+    public function testCanExecuteActionOnResourceWithVariableFromConstruct()
+    {
+        $evaluator = new Evaluator([
+            'Statement' => [
+                [
+                    'Action' => 'service:test',
+                    'Resource' => 'urn:test:${urn:someVariable}',
+                    'Effect' => 'Allow',
+                ],
+            ],
+        ], [
+            'urn:someVariable' => 'test',
+        ]);
+
+        $actual = $evaluator->canExecuteActionOnResource('service:test', 'urn:test:test');
+        $this->assertTrue($actual);
+    }
+
+    public function testCanExecuteActionOnResourceWithVariableOverride()
+    {
+        $evaluator = new Evaluator([
+            'Statement' => [
+                [
+                    'Action' => 'service:test',
+                    'Resource' => 'urn:test:${urn:someVariable}',
+                    'Effect' => 'Allow',
+                ],
+            ],
+        ], [
+            'urn:someVariable' => 'fail',
+        ]);
+
+        $actual = $evaluator->canExecuteActionOnResource('service:test', 'urn:test:test', [
+            'urn:someVariable' => 'test',
+        ]);
+        $this->assertTrue($actual);
+    }
 }

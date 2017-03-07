@@ -45,15 +45,49 @@ class Resource
      * @param string $requestedResource
      * @return bool
      */
-    public function matches($requestedResource)
+    public function matches($requestedResource, array $variables = [])
     {
+        $variableStrings = $this->mapVariables($variables);
         foreach ($this->resources as $resource) {
-            $resourceRegex = '/^'.str_replace('\*', '.*', preg_quote($resource, '/')).'$/';
+            $preparedResource = $this->replaceWildcard($this->replaceVariables($resource, $variableStrings));
+            $resourceRegex = '/^'.$preparedResource.'$/';
             if (preg_match($resourceRegex, $requestedResource)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param array $variables
+     * @return array
+     */
+    private function mapVariables(array $variables)
+    {
+        $mappedVariables = [];
+        foreach ($variables as $key => $value) {
+            $mappedVariables['${'.$key.'}'] = $value;
+        }
+        return $mappedVariables;
+    }
+
+    /**
+     * @param string $resource
+     * @param array $variables
+     * @return string
+     */
+    private function replaceVariables($resource, array $variables)
+    {
+        return strtr($resource, $variables);
+    }
+
+    /**
+     * @param string $resource
+     * @return string
+     */
+    private function replaceWildcard($resource)
+    {
+        return str_replace('\*', '.*', preg_quote($resource, '/'));
     }
 }

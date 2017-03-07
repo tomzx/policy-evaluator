@@ -10,6 +10,11 @@ class Evaluator
     private $policies;
 
     /**
+     * @var array
+     */
+    private $variables;
+
+    /**
      * @var Statement[]
      */
     private $statements;
@@ -17,9 +22,10 @@ class Evaluator
     /**
      * @param array $policies
      */
-    public function __construct(array $policies)
+    public function __construct(array $policies, array $variables = [])
     {
         $this->policies = $policies;
+        $this->variables = $variables;
 
         if ( ! isset($this->policies['Statement'])) {
             throw new \InvalidArgumentException('The policy must have at least one statement.');
@@ -37,14 +43,23 @@ class Evaluator
     }
 
     /**
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->variables;
+    }
+
+    /**
      * @param string $action
      * @param string $resource
+     * @param array $variables
      * @return bool
      */
-    public function canExecuteActionOnResource($action, $resource)
+    public function canExecuteActionOnResource($action, $resource, array $variables = [])
     {
         // TODO(tom@tomrochette.com): Validate action and resource are in valid format
-        $statements = $this->matchStatement($action, $resource);
+        $statements = $this->matchStatement($action, $resource, $variables);
 
         foreach ($statements as $statement) {
             // If we found a matching statement with an explicit deny, deny right away
@@ -83,17 +98,19 @@ class Evaluator
     /**
      * @param string $action
      * @param string $resource
+     * @param array $variables
      * @return array
      */
-    private function matchStatement($action, $resource)
+    private function matchStatement($action, $resource, array $variables = [])
     {
+        $variables += $this->variables;
         $statements = [];
         foreach ($this->statements as $statement) {
             if ( ! $statement->matchesAction($action)) {
                 continue;
             }
 
-            if ( ! $statement->matchesResource($resource)) {
+            if ( ! $statement->matchesResource($resource, $variables)) {
                 continue;
             }
 

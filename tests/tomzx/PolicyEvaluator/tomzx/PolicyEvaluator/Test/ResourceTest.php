@@ -89,4 +89,20 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $actual = $resource->matches('urn:test:test');
         $this->assertFalse($actual);
     }
+
+    public function testMatchVariable()
+    {
+        $resource = new Resource('urn:test:${urn:someVariable}');
+        $actual = $resource->matches('urn:test:test', [
+            'urn:someVariable' => 'test',
+        ]);
+        $this->assertTrue($actual);
+    }
+
+    public function testMatchWithUnspecifiedVariableShouldNotMatch()
+    {
+        $resource = new Resource('urn:test:${urn:someVariable}');
+        $actual = $resource->matches('urn:test:test');
+        $this->assertFalse($actual);
+    }
 }

@@ -16,6 +16,9 @@
 ## Example
 ```php
 use tomzx\PolicyEvaluator\Evaluator;
+use tomzx\PolicyEvaluator\Resource;
+
+Resource::$prefix = 'arn';
 
 $evaluator = new Evaluator([
 	'Statement' => [
@@ -34,6 +37,28 @@ $evaluator = new Evaluator([
 
 $evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test');
 $evaluator->canExecuteActionOnResource('s3:GetObject', 'arn:aws:s3:::my-bucket/some-file');
+```
+
+### Variables support
+```php
+use tomzx\PolicyEvaluator\Evaluator;
+use tomzx\PolicyEvaluator\Resource;
+
+Resource::$prefix = 'arn';
+
+$evaluator = new Evaluator([
+	'Statement' => [
+		[
+			'Action' => 'service:*',
+			'Resource' => 'arn:aws:${aws:username}',
+			'Effect' => 'Allow',
+		],
+	],
+]);
+
+$evaluator->canExecuteActionOnResource('service:test', 'arn:aws:test', [
+    'aws:username' => 'someUsername',
+]);
 ```
 
 ## License
