@@ -90,9 +90,18 @@ class Evaluator
         }
 
         foreach ($statements as $statement) {
-            $statement = new Statement($statement);
+            $statement = $this->makeStatement($statement);
             $this->statements[] = $statement;
         }
+    }
+
+    /**
+     * @param array $statement
+     * @return \tomzx\PolicyEvaluator\Statement
+     */
+    protected function makeStatement(array $statement)
+    {
+        return new Statement($statement);
     }
 
     /**
@@ -101,7 +110,7 @@ class Evaluator
      * @param array $variables
      * @return array
      */
-    private function matchStatement($action, $resource, array $variables = [])
+    public function matchStatement($action, $resource, array $variables = [])
     {
         $variables += $this->variables;
         $statements = [];
