@@ -21,7 +21,7 @@ class Statement
     /**
      * @param array $statement
      */
-    public function __construct($statement)
+    public function __construct(array $statement)
     {
         if (!isset($statement['Action'])) {
             throw new \InvalidArgumentException('Missing required field Action.');
