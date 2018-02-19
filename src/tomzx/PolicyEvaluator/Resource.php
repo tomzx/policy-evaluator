@@ -42,15 +42,32 @@ class Resource
     }
 
     /**
+     * @return array
+     */
+    public function getResourcesCompiled(array $variables = [])
+    {
+        $variableStrings = $this->mapVariables($variables);
+        $resources = [];
+
+        foreach ($this->resources as $resource) {
+            $resources[] = $this->replaceVariables($resource, $variableStrings);
+        }
+
+        return $resources;
+    }
+
+    /**
      * @param string $requestedResource
      * @return bool
      */
     public function matches($requestedResource, array $variables = [])
     {
-        $variableStrings = $this->mapVariables($variables);
-        foreach ($this->resources as $resource) {
-            $preparedResource = $this->replaceWildcard($this->replaceVariables($resource, $variableStrings));
-            $resourceRegex = '/^'.$preparedResource.'$/';
+        $resources = $this->getResourcesCompiled($variables);
+
+        foreach ($resources as $resource) {
+            $preparedResource = $this->replaceWildcard($resource);
+            $resourceRegex    = '/^'.$preparedResource.'$/';
+
             if (preg_match($resourceRegex, $requestedResource)) {
                 return true;
             }
